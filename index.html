@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Project AJB</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+      body{
+        background-color:black;
+        background-size:cover;
+        font-family:'Open Sans';
+        font-size:4.5vh;
+        overflow-x:hidden;
+      }
+      .beau-ui{
+        border:4px solid rgb(0,255,0);
+        background-color:rgba(0,255,0,0.7);
+        color:#000;
+        margin-top:4px;
+        transform:translateY(-50px);
+        opacity:0;
+        transition:0.4s;
+      }
+      #splash{
+        position:absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100vh;
+        text-align:center;
+        line-height:100vh;
+        color:white;
+        background-color:black;
+        font-size:6vh;
+        transition:1s;
+      }
+      button,input{
+        position:relative;
+        font-size:4.5vh;
+        font-family:'Open Sans';
+        outline:none;
+        border:2px solid white;
+        color:white;
+        background-color:#000;
+        margin:3px;
+      }
+      button:hover{
+        border-color:#ccc;
+      }
+      .btnripple{
+        position:absolute;
+        top:-4px;
+        left:-4px;
+        width:calc(100% + 4px);
+        height:calc(100% + 4px);
+        border:2px solid white;
+        animation:ripple 0.8s;
+      }
+      @keyframes ripple{
+        from{
+          top:-4px;
+          left:-4px;
+          width:calc(100% + 4px);
+          height:calc(100% + 4px);
+          opacity:1;
+        }
+        to{
+          top:-9px;
+          left:-9px;
+          width:calc(100% + 14px);
+          height:calc(100% + 14px);
+          opacity:0;
+        }
+      }
+      @keyframes toleft{
+        0%{
+          transform:translateX(0px);
+          opacity:1;
+        }
+        49.9%{
+          transform:translateX(-2vw);
+          opacity:0;
+        }
+        50.1%{
+          transform:translateX(2vw);
+          opacity:0;
+        }
+        100%{
+          transform:translateX(0px);
+          opacity:1;
+        }
+      }
+      @keyframes toright{
+        0%{
+          transform:translateX(0px);
+          opacity:1;
+        }
+        49.9%{
+          transform:translateX(2vw);
+          opacity:0;
+        }
+        50.1%{
+          transform:translateX(-2vw);
+          opacity:0;
+        }
+        100%{
+          transform:translateX(0px);
+          opacity:1;
+        }
+      }
+      #title{
+        text-align:center;
+      }
+      p{
+        font-size:2.6vh;
+        margin:0px;
+      }
+      .entry{
+        margin-left:-3px;
+        display:inline-block;
+        width:100%;
+      }
+      .emotion{
+        background-color:rgba(0,0,0,0);
+        border:0px solid rgba(0,0,0,0);
+        border-bottom:2px solid #000;
+        width:200px;
+        color:#000;
+      }
+      @media screen and (min-width: 100vh){
+        .entry{
+          width:calc(50% - 10px);
+        }
+      }
+      @media screen and (min-width: 140vh){
+        .entry{
+          width:calc(33% - 10px);
+        }
+      }
+      @media screen and (min-width: 180vh){
+        .entry{
+          width:calc(25% - 14px);
+        }
+      }
+      #wallpaper{
+         height:60vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id='res-selector'>
+      <div id='title' class='beau-ui'><p>I don't know about your reaction to birthdays, so I'll let you insert the emotion and/or exclamation point.</p><input class='emotion' style='width:25vh; text-align:right;' type='text'> birthday, Azzi<input class='emotion' style='width:1vh' type='text'><br><p>Choose your preferred resolution below.<br>The one closest to your detected size is in <b>blue.</b></p></div>
+      <div class='beau-ui' style='border:4px solid rgb(255,255,0); background-color:rgba(255,255,0,0.75); color:black;'>Note<p>The image may seem exceedingly tall on some devices. The reason will be revealed during the application process.</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res0'>750x1334<p>iPhone SE (2nd gen)</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res1'>828x1792<p>iPhone 11/XR</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res2'>1125x2436<p>iPhone 11 Pro/XS</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res3'>1242x2688<p>iPhone 11 Pro Max/XS Max</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res4'>1284x2778<p>iPhone 12 Pro Max/13 Pro Max</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res5'>1170x2532<p>iPhone 13/13 Pro/12/12 Pro</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res6'>1080x2340<p>iPhone 13 Mini/12 Mini</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res7'>3840x2160<p>Most high-end computers/monitors</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res8'>1920x1080<p>Most modern computers</p></div>
+      <div class='beau-ui entry' onclick='gotoImage(this)' id='res9'>1366x768<p>Chromebooks/low end laptops</p></div>
+    </div>
+    <div id='get-the-image' style='display:none'>
+      <div id='msg' style='position:absolute; top:0; left:0; width:100vw; text-align:center; background-color:#000; color:#fff;'>The image you are about to see is applied differently compared to a normal wallpaper.<br><button onclick="Back()">Back</button><button onclick="Next()">Next</button></div>
+    </div>
+    <script>
+      function detectSize(){
+        resx = [750,828,1125,1242,1284,1170,1080,3840,1920,1366];
+        resy = [1334,1792,2436,2688,2778,2532,2340,2160,1080,768];
+        diffx=[];
+        resx.forEach((item) => {
+          diffx.push(Math.abs(window.innerWidth-item));
+        })
+        diffy=[];
+        resy.forEach((item) => {
+          diffy.push(Math.abs(window.innerHeight-item));
+        })
+        diff=[];
+        diffx.forEach((item,i) => {
+          diff.push(diffx[i]+diffy[i]);
+        })
+        amin = Math.min(...diff);
+        diff.forEach((item,i) => {
+          det = document.getElementById('res'+i);
+          if(item==amin){
+            det.style.border = '4px solid rgb(0,0,255)';
+            det.style.backgroundColor = 'rgba(0,0,255,0.7)';
+            det.style.color = '#fff';
+          }
+          else{
+            det.style.border = '4px solid rgb(0,255,0)';
+            det.style.backgroundColor = 'rgba(0,255,0,0.7)';
+            det.style.color = '#000';
+          }
+        })
+      }
+      detectSize();
+      window.addEventListener('resize', () => {
+        detectSize();
+      })
+      page = 0;
+      function ResetPage(){
+        page = 0;
+        updatePage();
+        Back();
+      }
+      function Back(){
+        document.getElementById('msg').style.animation='toright 0.5s';
+        setTimeout(() => {
+          document.getElementById('msg').style.animation='';
+        }, 500);
+        if(page > 0){
+          page -= 1;
+          setTimeout(() => {
+            updatePage();
+          }, 250);
+        }
+        else{
+          page = 0;
+          imageOpen = false;
+          document.getElementById('get-the-image').style.display='none';
+          document.getElementById('res-selector').style.display='';
+          document.body.style.overflowY = 'scroll';
+          document.querySelectorAll('.beau-ui').forEach((item,i) => {
+            setTimeout(() => {
+              item.style.transform = 'scale(1) translateY(0px)';
+              item.style.opacity = 1;
+            }, i*30)
+          })
+        }
+      }
+      function Next(){
+        document.getElementById('msg').style.animation='toleft 0.5s';
+        setTimeout(() => {
+          document.getElementById('msg').style.animation='';
+        }, 500);
+        if(page < 3){
+          page += 1;
+          setTimeout(() => {
+            updatePage();
+          }, 250);
+        }
+      }
+      function updatePage(){
+        msg = document.getElementById('msg');
+        btns = '<br><button onclick="Back()">Back</button><button onclick="Next()">Next</button>'
+        if(page==0){
+          msg.innerHTML = 'The image you are about to see is applied differently compared to a normal wallpaper.'+btns;
+        }
+        else if(page==1){
+          msg.innerHTML = 'Press and hold on the image below until a menu comes up. Select "Save Image" from the menu.'+btns+'<br><img id="wallpaper" src="">';
+          document.getElementById('wallpaper').src = src;
+        }
+        else if(page==2){
+          msg.innerHTML = 'For iPhone, in the Settings app, apply this wallpaper as you normally would. Scroll with 2 fingers to position the image.'+btns;
+        }
+        else if(page==3){
+          msg.innerHTML = 'Everything else can be customized as usual.<br><button onclick="Back()">Back</button><button onclick="ResetPage()">Back to main screen</button>';
+        }
+      }
+    </script>
+    <script>
+      setTimeout(() => {
+        startAnim();
+      }, 500);
+      function startAnim(){
+        document.querySelectorAll('.beau-ui').forEach((item,i) => {
+          setTimeout(() => {
+            item.style.transform = 'translateY(0px)';
+            item.style.opacity = 1;
+          }, 50*i)
+        })
+      }
+      imageOpen = false;
+      function gotoImage(el){
+        if(imageOpen == false){
+          imageOpen = true;
+          re = el.innerHTML;
+          src = 'img/'+re.substring(0,re.indexOf('<'))+'-Light.png';
+          document.querySelectorAll('.beau-ui').forEach((item,i) => {
+            if(item != el){
+              setTimeout(() => {
+                item.style.transform = 'scale(0.8)';
+                item.style.opacity = 0;
+              }, 30*i)
+            }
+            else{
+              setTimeout(() => {
+                item.style.transform = 'scale(1.2)';
+                item.style.opacity = 0;
+                document.getElementById('get-the-image').style.display = '';
+                window.scrollTo(0,0);
+                document.body.style.overflowY = 'hidden';
+              }, 900)
+            }
+          })
+        }
+      }
+      image.src = src;
+    </script>
+  </body>
+</html>
